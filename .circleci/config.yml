@@ -1,8 +1,5 @@
 version: 2.1
 
-parameters:
-  image_registry: &image_registry us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH
-
 jobs:  
   build:
     docker:
@@ -26,7 +23,7 @@ jobs:
 
   deploy:
     docker:
-      - image: *image_registry
+      - image: us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH
         auth:
           username: _json_key
           password: $GCLOUD_SERVICE_KEY
@@ -34,7 +31,7 @@ jobs:
     steps:
       - run:
         name: Building docker image
-        command: docker build -t *image_registry .
+        command: docker build -t us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
       - run:
         name: Pushing docker image to gcr
-        command: docker push *image_registry
+        command: docker push us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
