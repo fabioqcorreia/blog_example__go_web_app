@@ -1,5 +1,9 @@
-version: 2
-jobs:
+version: 2.1
+
+parameters:
+  image_registry: &image_registry us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH
+
+jobs:  
   build:
     docker:
       # specify the version
@@ -10,8 +14,21 @@ jobs:
     steps:
       - checkout
       - run: 
-          command: go get -v -t -d ./...
+        name: Installing depedencies
+        command: go get -v -t -d ./...
       - run: 
-          command: go test -v ./...
+        name: Running tests
+        command: go test -v ./...
       - run: 
-          command: go build
+        name: Compiling
+        command: go build
+      - run:
+        name: Building docker image
+        command: docker build -t *image_registry .
+      - image: *image_registry
+        auth:
+          username: _json_key
+          password: $GCLOUD_SERVICE_KEY
+      - run:
+        name: Pushing docker image to gcr
+        command: docker push *image_registry
