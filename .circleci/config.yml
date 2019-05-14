@@ -5,7 +5,8 @@ jobs:
       # specify the version
       - image: circleci/golang:1.9
 
-    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
+
     steps:
       - checkout
       - run: 
