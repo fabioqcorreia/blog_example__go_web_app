@@ -8,6 +8,10 @@ jobs:
     docker:
       # specify the version
       - image: circleci/golang:1.9
+      - image: *image_registry
+        auth:
+          username: _json_key
+          password: $GCLOUD_SERVICE_KEY
 
     working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
 
@@ -25,10 +29,6 @@ jobs:
       - run:
         name: Building docker image
         command: docker build -t *image_registry .
-      - image: *image_registry
-        auth:
-          username: _json_key
-          password: $GCLOUD_SERVICE_KEY
       - run:
         name: Pushing docker image to gcr
         command: docker push *image_registry
