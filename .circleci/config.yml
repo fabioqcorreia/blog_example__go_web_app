@@ -5,10 +5,6 @@ jobs:
     docker:
       # specify the version
       - image: circleci/golang:1.9
-      - image: us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH
-        auth:
-          username: _json_key
-          password: $GCLOUD_SERVICE_KEY
 
     working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
 
