@@ -32,7 +32,7 @@ jobs:
           command: cat gcp-key.json | docker login -u _json_key --password-stdin https://us.gcr.io/vitaes/
       - run:
           name: Pushing docker image to gcr
-          command: docker image push us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH
+          command: docker image push us.gcr.io/vitaes/gosample:$CIRCLE_BRANCH
 
 workflows:
   version: 2
