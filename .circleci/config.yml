@@ -2,23 +2,25 @@ version: 2.1
 
 jobs:  
   build:
+  
+    working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
+  
     docker:
       # specify the version
       - image: circleci/golang:1.9
-
-    working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
+      - image: google/cloud-sdk
 
     steps:
       - checkout
       - run: 
-        name: Installing depedencies
-        command: go get -v -t -d ./...
+          name: Installing depedencies
+          command: go get -v -t -d ./...
       - run: 
-        name: Running tests
-        command: go test -v ./...
+          name: Running tests
+          command: go test -v ./...
       - run: 
-        name: Compiling
-        command: go build
+          name: Compiling
+          command: go build
       
   deliver:
     docker:
@@ -32,11 +34,11 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Building docker image
-        command: docker build -t us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
+          name: Building docker image
+          command: docker build -t us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
       - run:
-        name: Pushing docker image to gcr
-        command: docker push us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
+          name: Pushing docker image to gcr
+          command: docker push us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
 
 workflows:
   version: 2
