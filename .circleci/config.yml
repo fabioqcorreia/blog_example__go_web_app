@@ -20,7 +20,7 @@ jobs:
           command: go test -v ./...
       - run: 
           name: Compiling
-          command: go build -o main
+          command: go build
       - run:
           name: Building docker image
           command: docker build -t us.gcr.io/vitaes/gosample:$CIRCLE_BRANCH .
