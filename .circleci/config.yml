@@ -11,6 +11,7 @@ jobs:
 
     steps:
       - checkout
+      - setup_remote_docker
       - run: 
           name: Installing depedencies
           command: go get -v -t -d ./...
@@ -19,21 +20,10 @@ jobs:
           command: go test -v ./...
       - run: 
           name: Compiling
-          command: go build
-      
-  deliver:
-
-    docker:
-      # specify the version
-      - image: circleci/golang:1.9
-      
-    working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
-
-    steps:
-      - checkout
+          command: go build -o main
       - run:
           name: Building docker image
-          command: docker build -t us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
+          command: docker build -t us.gcr.io/vitaes/gosample:$CIRCLE_BRANCH .
       - run:
           name: Creating GCR json file
           command: echo $GCLOUD_SERVICE_KEY > /go/src/github.com/fabioqcorreia/blog_example__go_web_app/gcp-key.json

@@ -1,13 +1,15 @@
-FROM circleci/golang:1.9
+FROM golang:1.12-alpine
 
 WORKDIR /app
 
 COPY . .
 
-RUN go get -v -t -d ./... && \
-    go build && \
-    chmod a+x blog_example__go_web_app
+RUN apk update && \
+    apk add git && \
+    go get -v -t -d ./... && \
+    go build -o main && \
+    chmod a+x main
     
 EXPOSE 8080
 
-CMD ["./blog_example__go_web_app"]
+CMD ["/app/main"]
