@@ -39,6 +39,3 @@ workflows:
   build_test_and_deliver:
     jobs:
       - build
-      - deliver:
-          requires:
-            - build
