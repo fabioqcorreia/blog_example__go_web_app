@@ -22,12 +22,11 @@ jobs:
           command: go build
       
   deliver:
-    docker:
-      - image: us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH
-        auth:
-          username: _json_key
-          password: $GCLOUD_SERVICE_KEY
 
+    docker:
+      # specify the version
+      - image: circleci/golang:1.9
+      
     working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
 
     steps:
