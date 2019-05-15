@@ -30,6 +30,7 @@ jobs:
     working_directory: /go/src/github.com/fabioqcorreia/blog_example__go_web_app
 
     steps:
+      - checkout
       - run:
         name: Building docker image
         command: docker build -t us.gcr.io/vitaes/testapp:$CIRCLE_BRANCH .
@@ -42,4 +43,6 @@ workflows:
   build_test_and_deliver:
     jobs:
       - build
-      - deliver
+      - deliver:
+          requires:
+            - build
